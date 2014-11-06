@@ -28,4 +28,14 @@ class Connector {
 
     }
 
+    public function findOne($entityName, $criteria)
+    {
+
+    }
+
+    public function findMany($entityName, $criteria)
+    {
+
+    }
+
 } 
