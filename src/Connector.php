@@ -1,4 +1,6 @@
 <?php namespace Vdbf\Magento;
+
+use GuzzleHttp\ClientInterface;
 use Vdbf\Magento\Entity\EntityInterface;
 
 /**
@@ -17,7 +19,7 @@ class Connector {
      */
     protected $client;
 
-    public function __construct($config, $client)
+    public function __construct($config, ClientInterface $client)
     {
         $this->config = $config;
         $this->client = $client;

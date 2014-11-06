@@ -11,5 +11,5 @@ class Filter {
     protected $dir;
 
     protected $limit;
-    
+
 } 
