@@ -1,5 +1,5 @@
 <?php namespace Vdbf\Magento\Entity; 
 
-class SalesOrder {
+class SalesOrder extends AbstractEntity {
 
 } 

@@ -1,5 +1,5 @@
 <?php namespace Vdbf\Magento\Entity; 
 
-class CustomerAddress {
+class CustomerAddress extends AbstractEntity {
 
 } 

@@ -22,4 +22,9 @@ class Connector {
         $this->client = $client;
     }
 
+    public function persist(EntityInterface $entity)
+    {
+
+    }
+
 } 

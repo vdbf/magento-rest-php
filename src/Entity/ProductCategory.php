@@ -1,5 +1,5 @@
 <?php namespace Vdbf\Magento\Entity; 
 
-class ProductCategory {
+class ProductCategory extends AbstractEntity {
 
 } 

@@ -1,5 +1,5 @@
 <?php namespace Vdbf\Magento\Entity; 
 
-class ProductWebsite {
+class ProductWebsite extends AbstractEntity {
 
 } 

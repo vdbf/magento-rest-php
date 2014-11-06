@@ -1,5 +1,5 @@
 <?php namespace Vdbf\Magento\Entity;
 
-class Customer {
+class Customer extends AbstractEntity {
 
 } 

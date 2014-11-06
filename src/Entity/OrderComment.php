@@ -1,5 +1,5 @@
 <?php namespace Vdbf\Magento\Entity; 
 
-class OrderComment {
+class OrderComment extends AbstractEntity {
 
 } 
