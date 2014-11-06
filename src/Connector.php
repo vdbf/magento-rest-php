@@ -1,4 +1,5 @@
 <?php namespace Vdbf\Magento;
+use Vdbf\Magento\Entity\EntityInterface;
 
 /**
  * Class Connector
