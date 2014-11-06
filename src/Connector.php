@@ -28,12 +28,12 @@ class Connector {
 
     }
 
-    public function findOne($entityName, $criteria)
+    public function findOne($entityName, Filter $filter)
     {
 
     }
 
-    public function findMany($entityName, $criteria)
+    public function findMany($entityName, Filter $filter)
     {
 
     }
