@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "00eaadc21e0805c14ad57f41f1138f49",
+    "hash": "ff6e46b8c99ec7208c173196d0144cd6",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -63,6 +63,57 @@
                 "web service"
             ],
             "time": "2014-11-04 07:09:15"
+        },
+        {
+            "name": "guzzlehttp/oauth-subscriber",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/oauth-subscriber.git",
+                "reference": "03f1ebe31d3112526106d0570c80eba6820e86e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/oauth-subscriber/zipball/03f1ebe31d3112526106d0570c80eba6820e86e5",
+                "reference": "03f1ebe31d3112526106d0570c80eba6820e86e5",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~4.0|~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Subscriber\\Oauth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle OAuth 1.0 subscriber",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "oauth"
+            ],
+            "time": "2014-10-23 22:19:02"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -1075,7 +1126,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "guzzlehttp/oauth-subscriber": 20
+    },
     "prefer-stable": false,
     "platform": [],
     "platform-dev": []

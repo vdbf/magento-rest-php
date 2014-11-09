@@ -3,6 +3,7 @@
 use OAuth;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -49,7 +50,7 @@ class OAuthTokenRequester
 
             case static::STATE_USER_AUTH:
 
-                $this->accuireUserAuthentication($client, $request);
+                $this->accuireUserAuthentication($request);
 
                 break;
 
@@ -59,7 +60,7 @@ class OAuthTokenRequester
                 break;
 
             case static::STATE_READY:
-                $this->printAccessTokenAndSecret($request);
+                $this->printAccessTokenAndSecret($this->resolveSession($request));
                 break;
 
             default:
@@ -71,7 +72,7 @@ class OAuthTokenRequester
     {
         $requestToken = $client->getRequestToken($this->buildInitiateUrl());
 
-        $session = $request->getSession();
+        $session = $this->resolveSession($request);
         $session->set('token', $requestToken['oauth_token']);
         $session->set('secret', $requestToken['oauth_token_secret']);
         $session->set('state', static::STATE_USER_AUTH);
@@ -82,7 +83,7 @@ class OAuthTokenRequester
 
     protected function accuireUserAuthentication($request)
     {
-        $session = $request->getSession();
+        $session = $this->resolveSession($request);
         $session->set('state', static::STATE_ACCESS_TOKEN);
 
         //next step
@@ -92,10 +93,12 @@ class OAuthTokenRequester
 
     protected function accuireAccessToken($client, $request)
     {
-        $client->setToken($request->get('oauth_token'), $request->getSession()->get('secret'));
+        $session = $this->resolveSession($request);
+
+        $client->setToken($request->get('oauth_token'), $session->get('secret'));
+
         $accessToken = $client->getAccessToken($this->buildAccessTokenRequestUrl());
 
-        $session = $request->getSession();
         $session->set('token', $accessToken['oauth_token']);
         $session->set('secret', $accessToken['oauth_token_secret']);
         $session->set('state', static::STATE_READY);
@@ -121,24 +124,16 @@ class OAuthTokenRequester
 
     protected function getStateFromRequest(Request $request)
     {
-        $session = $request->getSession();
+        $session = $this->resolveSession($request);
 
         if (!$request->get('oauth_token', false) && !$session->get('state', false)) {
             //next step is aquiring a request token
             return static::STATE_REQUEST_TOKEN;
         }
 
-        if ($session->get('state') == static::STATE_REQUEST_TOKEN) {
-            //next step is aquiring user authentiation
-            return static::STATE_USER_AUTH;
+        if ($session->has('state')) {
+            return $session->get('state');
         }
-
-        if ($session->get('state') == static::STATE_USER_AUTH) {
-            //next step is to aquire the access token from the request
-            return static::STATE_ACCESS_TOKEN;
-        }
-
-        return static::STATE_READY;
     }
 
     /**
@@ -170,5 +165,10 @@ class OAuthTokenRequester
             'secret' => $session->get('secret')
         );
         print_r($credentials);
+    }
+
+    protected function resolveSession(Request $request)
+    {
+        return $request->hasSession() ? $request->getSession() : new Session();
     }
 } 

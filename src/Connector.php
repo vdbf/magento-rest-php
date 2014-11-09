@@ -1,13 +1,15 @@
 <?php namespace Vdbf\Magento;
 
 use GuzzleHttp\ClientInterface;
-use Vdbf\Magento\Entity\EntityInterface;
+use GuzzleHttp\Message\Request;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 /**
  * Class Connector
  * @package Vdbf\Magento
  */
-class Connector {
+class Connector
+{
 
     /**
      * @var array
@@ -23,21 +25,42 @@ class Connector {
     {
         $this->config = $config;
         $this->client = $client;
+
+        if (isset($this->config['auth'])) {
+            $this->registerAuthSubscriber($this->config['auth']);
+        }
     }
 
-    public function persist(EntityInterface $entity)
+    public function get($url, $options = array())
     {
-
+        $request = $this->createRequest('GET', $url, $options);
+        return $this->handleRequest($request);
     }
 
-    public function findOne($entityName, Filter $filter)
+    public function post($url, $options = array())
     {
-
+        $request = $this->createRequest('POST', $url, $options);
+        return $this->handleRequest($request);
     }
 
-    public function findMany($entityName, Filter $filter)
+    protected function handleRequest(Request $request)
     {
-
+        if (!isset($this->config['batch'])) {
+            return $this->client->send($request);
+        }
+        return $request;
     }
+
+    public function createRequest($method, $url, $options)
+    {
+        return $this->client->createRequest($method, $url, $options);
+    }
+
+    protected function registerAuthSubscriber($credentials)
+    {
+        $subscriber = new Oauth1($credentials);
+        $this->client->getEmitter()->attach($subscriber);
+    }
+
 
 } 
