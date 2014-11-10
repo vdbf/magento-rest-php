@@ -6,7 +6,7 @@ use ArrayAccess;
  * Class AbstractEntity
  * @package Vdbf\Magento\Entity
  */
-abstract class AbstractEntity implements ArrayAccess
+abstract class AbstractEntity implements ArrayAccess, EntityInterface
 {
 
     protected $attributes = array();
@@ -49,6 +49,33 @@ abstract class AbstractEntity implements ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->attributes[$offset]);
+    }
+
+    /**
+     * Determine if entity is new or not
+     * @return bool
+     */
+    public function isNew()
+    {
+        return !$this->offsetExists('enitity_id');
+    }
+
+    /**
+     * Return JSON representation of entity
+     * @return string
+     */
+    public function toJSON()
+    {
+        return json_encode($this->attributes);
+    }
+
+    /**
+     * Return array representation of entity
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->attributes;
     }
 
 } 

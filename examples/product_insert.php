@@ -20,16 +20,21 @@ $connector = new \Vdbf\Magento\Connector(array(
     )
 )));
 
-echo $connector->post('products', ['json' => [
-    'type_id' => 'simple',
-    'attribute_set_id' => 4,
-    'sku' => '1234',
-    'name' => 'TestProduct',
-    'price' => '200',
-    'status' => 1,
-    'weight' => '0.5',
-    'visibility' => 4,
-    'tax_class_id' => 2,
-    'description' => 'Test Product',
-    'short_description' => 'TP'
-]]);
+echo $connector->post(
+    'products',
+    array(
+        'json' => array(
+            'type_id' => 'simple',
+            'attribute_set_id' => 4,
+            'sku' => '1232',
+            'name' => 'TestProduct',
+            'price' => '200',
+            'status' => 1,
+            'weight' => '0.5',
+            'visibility' => 4,
+            'tax_class_id' => 2,
+            'description' => 'Test Product',
+            'short_description' => 'TP'
+        )
+    )
+);

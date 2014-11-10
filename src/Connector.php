@@ -43,6 +43,18 @@ class Connector
         return $this->handleRequest($request);
     }
 
+    public function put($url, $options = array())
+    {
+        $request = $this->createRequest('PUT', $url, $options);
+        return $this->handleRequest($request);
+    }
+
+    public function delete($url, $options = array())
+    {
+        $request = $this->createRequest('DELETE', $url, $options);
+        return $this->handleRequest($request);
+    }
+
     protected function handleRequest(Request $request)
     {
         if (!isset($this->config['batch'])) {
@@ -51,7 +63,7 @@ class Connector
         return $request;
     }
 
-    public function createRequest($method, $url, $options)
+    protected function createRequest($method, $url, $options)
     {
         return $this->client->createRequest($method, $url, $options);
     }
@@ -61,6 +73,5 @@ class Connector
         $subscriber = new Oauth1($credentials);
         $this->client->getEmitter()->attach($subscriber);
     }
-
 
 } 
